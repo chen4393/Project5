@@ -4,7 +4,13 @@
 public class Entry<K, V> {
     private K key;
     private V value;
-    private Entry<K, V> next;
+    private Entry next;
+
+    public Entry(K key, V value) {
+        this.key = key;
+        this.value = value;
+        this.next = null;
+    }
 
     public K getKey() {
         return key;
@@ -14,7 +20,7 @@ public class Entry<K, V> {
         return value;
     }
 
-    public Entry<K, V> getNext() {
+    public Entry getNext() {
         return next;
     }
 
@@ -26,7 +32,8 @@ public class Entry<K, V> {
         this.value = value;
     }
 
-    public void setNext(Entry<K, V> next) {
+    public void setNext(Entry next) {
         this.next = next;
     }
+
 }
