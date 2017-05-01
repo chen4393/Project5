@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+
 /**
  * Created by chaoranchen on 4/30/17.
  */
@@ -6,22 +11,28 @@ public class HashMap<K, V> implements Map<K, V> {
     private Entry<K, V>[] arr;
 
     private int hash(K key) {
-        return (key.hashCode() % arr.length);
+        int hashCode = key.hashCode();
+        if (hashCode < 0) {
+            hashCode *= -1;
+        }
+        return (hashCode % arr.length);
     }
 
     private int size;
 
     public HashMap() {
-        arr = new Entry[50];
+        arr = new Entry[500];
         size = 0;
     }
 
     public void clear() {
-        int size = arr.length;
-        arr = new Entry[size];
+        int capacity = arr.length;
+        arr = new Entry[capacity];
+        size = 0;
     }
 
     public boolean containsKey(K key) {
+        //System.out.println("key = " + key + ", hash(key) " + hash(key));
         Entry<K, V> head = arr[hash(key)];
         while (head != null) {
             if (head.getKey().equals(key)) {
@@ -143,6 +154,7 @@ public class HashMap<K, V> implements Map<K, V> {
     }
 
     public static void main(String[] args) {
+        /*
         Map<String, Integer> map = new HashMap<>();
         System.out.println(map);
         map.put("a", 87);
@@ -162,6 +174,33 @@ public class HashMap<K, V> implements Map<K, V> {
         System.out.println(map);
         map.replace("b", 60);
         System.out.println(map);
+        */
+        File file = new File("src/weather_10000.txt");
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            System.out.println("No Such File");
+            e.printStackTrace();
+        }
+
+        // Key is the combination of city and country, the form is city:country
+        Map<String, WeatherRecord> weatherMap = new HashMap<>();
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] instances = line.split(";");
+            double longitude = Double.parseDouble(instances[2]);
+            double latitude = Double.parseDouble(instances[3]);
+            double temperature = Double.parseDouble(instances[4]);
+            double minimum = Double.parseDouble(instances[5]);
+            double maximum = Double.parseDouble(instances[6]);
+            WeatherRecord wr = new WeatherRecord(instances[0], instances[1], longitude, latitude, temperature, minimum, maximum, instances[7]);
+            String key = wr.getCity() + ":" + wr.getCountry();
+            weatherMap.put(key, wr);
+        }
+        System.out.println(weatherMap.get("Kabinda:CD"));
+        System.out.println(weatherMap.get("Soe:ID"));
     }
 
     private Entry deleteEntry(Entry head, K key) {

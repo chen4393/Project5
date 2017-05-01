@@ -11,6 +11,17 @@ public class WeatherRecord {
     private double maximum;
     private String description;
 
+    public WeatherRecord(String city, String country, double longitude, double latitude, double temperature, double minimum, double maximum, String description) {
+        this.city = city;
+        this.description = description;
+        this.maximum = maximum;
+        this.minimum = minimum;
+        this.temperature = temperature;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.country = country;
+    }
+
     public String getCity() {
         return city;
     }
@@ -73,6 +84,20 @@ public class WeatherRecord {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "WeatherRecord{" +
+                "city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", temperature=" + temperature +
+                ", minimum=" + minimum +
+                ", maximum=" + maximum +
+                ", description='" + description + '\'' +
+                '}';
     }
 
 }
