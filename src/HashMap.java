@@ -12,7 +12,7 @@ public class HashMap<K, V> implements Map<K, V> {
     private int size;
 
     public HashMap() {
-        arr = new Entry[5];
+        arr = new Entry[50];
         size = 0;
     }
 
@@ -57,7 +57,7 @@ public class HashMap<K, V> implements Map<K, V> {
     }
 
     public boolean isEmpty() {
-        return (size > 0);
+        return (size == 0);
     }
 
     // This method associates the specified key with the specified value in the Map
